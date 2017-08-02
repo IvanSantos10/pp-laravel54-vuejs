@@ -3,6 +3,7 @@
 namespace Educ\Http\Controllers\Admin;
 
 use Educ\EducModelsUser;
+use Educ\Forms\UserForm;
 use Educ\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,11 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        $form = \FormBuilder::create(UserForm::class, [
+            'url' => route('admin.users.store'),
+            'method' => 'POST'
+        ]);
+        return view('admin.users.create', compact('form'));
     }
 
     /**
