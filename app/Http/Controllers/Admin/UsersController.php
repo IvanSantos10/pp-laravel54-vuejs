@@ -2,7 +2,6 @@
 
 namespace Educ\Http\Controllers\Admin;
 
-use Educ\EducModelsUser;
 use Educ\Forms\UserForm;
 use Educ\Http\Controllers\Controller;
 use Educ\Models\User;
@@ -68,10 +67,10 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \Educ\EducModelsUser  $educModelsUser
+     * @param  \Educ\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(EducModelsUser $educModelsUser)
+    public function show(User $user)
     {
         //
     }
@@ -79,33 +78,53 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \Educ\EducModelsUser  $educModelsUser
+     * @param  \Educ\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(EducModelsUser $educModelsUser)
+    public function edit(User $user)
     {
-        //
+        $form = \FormBuilder::create(UserForm::class, [
+            'url' => route('admin.users.update', ['user' =>$user->id]),
+            'method' => 'PUT',
+            'model' => $user
+        ]);
+
+        return view('admin.users.edit', compact('form'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Educ\EducModelsUser  $educModelsUser
+     * @param  \Educ\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EducModelsUser $educModelsUser)
+    public function update(User $user)
     {
-        //
+        /** @var Form $form */
+        $form = \FormBuilder::create(UserForm::class, [
+            'data' => ['id' => $user->id ]
+        ]);
+
+        if(!$form->isValid()){
+            return redirect()
+                ->back()
+                ->withErrors($form->getErrors())
+                ->withInput();
+        }
+
+        $data = $form->getFieldValues();
+        $user->update($data);
+
+        return redirect()->route('admin.users.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Educ\EducModelsUser  $educModelsUser
+     * @param  \Educ\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EducModelsUser $educModelsUser)
+    public function destroy(User $user)
     {
         //
     }

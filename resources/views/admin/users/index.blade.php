@@ -8,7 +8,8 @@
         </div>
         <div class="row">
             {!! Table::withContents($users->items())
-            ->striped()
+             ->hover()
+             ->striped()
              ->callback('Ações', function ($field, $model){
                 $linkEdit = route('admin.users.edit', ['user' => $model->id]);
                 $linkShow = route('admin.users.show', ['user' => $model->id]);
