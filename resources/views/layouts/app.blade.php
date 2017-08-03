@@ -48,7 +48,15 @@
         }
     @endphp
     {!! $navbar !!}
-
+    @if(Session::has('message'))
+        <div class="container">
+            {!! Alert::success(Session::get('message'))->close() !!}
+        </div>
+    @elseif(Session::has('error'))
+        <div class="container">
+            {!! Alert::danger(Session::get('error'))->close() !!}
+        </div>
+    @endif
     @yield('content')
 </div>
 

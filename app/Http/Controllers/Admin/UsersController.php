@@ -61,6 +61,8 @@ class UsersController extends Controller
         $data['password'] = str_random(6);
         User::create($data);
 
+        $request->session()->flash('message', 'Usuário criado com sucesso');
+
         return redirect()->route('admin.users.index');
     }
 
@@ -114,7 +116,7 @@ class UsersController extends Controller
 
         $data = $form->getFieldValues();
         $user->update($data);
-
+        Session()->flash('message', 'Usuário atulizado com sucesso');
         return redirect()->route('admin.users.index');
     }
 
@@ -127,6 +129,7 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+        Session()->flash('message', 'Usuário excluído com sucesso');
         return redirect()->route('admin.users.index');
     }
 }
