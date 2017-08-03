@@ -2,4 +2,7 @@ laravel form builder lib
 http://kristijanhusak.github.io/laravel-form-builder/
 https://github.com/kristijanhusak/laravel-form-builder
 
-php artisan make:form Forms/UserForm --fields="name:test, email:email"
+ - php artisan make:form Forms/UserForm --fields="name:test, email:email"
+
+https://github.com/patricktalmadge/bootstrapper
+composer require patricktalmadge/bootstrapper

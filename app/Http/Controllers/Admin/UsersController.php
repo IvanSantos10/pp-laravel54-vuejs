@@ -5,8 +5,14 @@ namespace Educ\Http\Controllers\Admin;
 use Educ\EducModelsUser;
 use Educ\Forms\UserForm;
 use Educ\Http\Controllers\Controller;
+use Educ\Models\User;
 use Illuminate\Http\Request;
+use Kris\LaravelFormBuilder\Form;
 
+/**
+ * Class UsersController
+ * @package Educ\Http\Controllers\Admin
+ */
 class UsersController extends Controller
 {
     /**
@@ -16,7 +22,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::paginate();
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -41,7 +48,21 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /** @var Form $form */
+        $form = \FormBuilder::create(UserForm::class);
+
+        if(!$form->isValid()){
+            return redirect()
+                ->back()
+                ->withErrors($form->getErrors())
+                ->withInput();
+        }
+
+        $data = $form->getFieldValues();
+        $data['password'] = str_random(6);
+        User::create($data);
+
+        return redirect()->route('admin.users.index');
     }
 
     /**
