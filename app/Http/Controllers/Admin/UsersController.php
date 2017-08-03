@@ -58,8 +58,7 @@ class UsersController extends Controller
         }
 
         $data = $form->getFieldValues();
-        $data['password'] = str_random(6);
-        User::create($data);
+        User::createFully($data);
 
         $request->session()->flash('message', 'Usuário criado com sucesso');
 
