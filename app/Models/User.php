@@ -34,8 +34,9 @@ class User extends Authenticatable implements TableInterface
 
     public static function createFully($data)
     {
-        $data['password'] = str_random(6);
-        /** @var User $user */
+        $password = str_random(6);
+        $data['password'] = $password;
+            /** @var User $user */
         $user = parent::create($data+['enrolment' => str_random(6)]);
         self::assignEnrolment($user, self::ROLE_ADMIN);
         $user->save();
@@ -43,7 +44,7 @@ class User extends Authenticatable implements TableInterface
             $token = \Password::broker()->createToken($user);
             $user->notify(new UserCreated($token));
         }
-        return $user;
+        return compact('user', 'password');
     }
 
     public static function assignEnrolment(User $user, $type)

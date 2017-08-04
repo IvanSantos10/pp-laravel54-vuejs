@@ -12,6 +12,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style type="text/css">
+        @media print {
+            .hidden-print {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
 <div id="app">
@@ -51,11 +58,11 @@
         {!! form($formLogout) !!}
     @endif
     @if(Session::has('message'))
-        <div class="container">
+        <div class="container hidden-print">
             {!! Alert::success(Session::get('message'))->close() !!}
         </div>
     @elseif(Session::has('error'))
-        <div class="container">
+        <div class="container hidden-print">
             {!! Alert::danger(Session::get('error'))->close() !!}
         </div>
     @endif
