@@ -44,10 +44,12 @@
                 'method' => 'POST',
                 'style' => 'display:nome'
             ]);
-            form($formLogout);
         }
     @endphp
     {!! $navbar !!}
+    @if(Auth::check())
+        {!! form($formLogout) !!}
+    @endif
     @if(Session::has('message'))
         <div class="container">
             {!! Alert::success(Session::get('message'))->close() !!}
