@@ -3,6 +3,7 @@
 namespace Educ\Http\Controllers\Auth;
 
 use Educ\Http\Controllers\Controller;
+use Educ\Models\Admin;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -43,6 +44,7 @@ class LoginController extends Controller
         $data = $request->only($this->username(), 'password');
         $usernameKey = $this->usernameKey();
         $data[$usernameKey] = $data[$this->username()];
+        $data['userable_type'] = Admin::class;
         unset($data[$this->username()]);
         return $data;
     }
