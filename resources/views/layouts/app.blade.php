@@ -36,6 +36,10 @@
                     Auth::user()->name,
                     [
                         [
+                            'link' => route('admin.users.settings.edit'),
+                            'title' => 'Configuraçoes'
+                        ],
+                        [
                             'link' => route('logout'),
                             'title' => 'Logout',
                             'linkAttributes' => [
