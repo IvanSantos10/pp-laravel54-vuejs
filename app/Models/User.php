@@ -3,6 +3,7 @@
 namespace Educ\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
+use Educ\Notifications\UserCreated;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -34,9 +35,13 @@ class User extends Authenticatable implements TableInterface
     public static function createFully($data)
     {
         $data['password'] = str_random(6);
+        /** @var User $user */
         $user = parent::create($data+['enrolment' => str_random(6)]);
         self::assignEnrolment($user, self::ROLE_ADMIN);
         $user->save();
+        if(isset($data['send_mail'])){
+            $user->notify(new UserCreated());
+        }
         return $user;
     }
 

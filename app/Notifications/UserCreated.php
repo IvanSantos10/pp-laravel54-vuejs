@@ -41,8 +41,9 @@ class UserCreated extends Notification
         $appName = config('app.name');
         return (new MailMessage)
                     ->subject("Sua conta no $appName foi criada")
-                    ->greeting("Olá {$notifiable->nome}, seja bem-vindo ao $appName")
-                    ->line("Sue número de matricula é: {$notifiable->enrolment}")
-                    ->line('Obrigado por usar nossa aplicação!');
+                    ->greeting("Olá {$notifiable->name}, seja bem-vindo ao $appName")
+                    ->line("Seu número de matricula é: {$notifiable->enrolment}")
+                    ->line('Obrigado por usar nossa aplicação!')
+                    ->salutation('Atensiosamente');
     }
 }
